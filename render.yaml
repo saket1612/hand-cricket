@@ -1,7 +1,7 @@
 services:
   - type: web
     name: hand-cricket
-    env: node
+    runtime: node
     buildCommand: npm install && npm run build
     startCommand: node server/index.js
     envVars:
