@@ -55,12 +55,12 @@ function emitBallStart(roomCode) {
     ...(target !== undefined && { target }),
   })
 
-  // Start 5-second server timer
+  // Start 3-second server timer
   clearBallTimer(roomCode)
   const timerId = setTimeout(() => {
     ballTimers.delete(roomCode)
     resolveBallAndAdvance(roomCode)
-  }, 5000)
+  }, 3000)
   ballTimers.set(roomCode, timerId)
 }
 

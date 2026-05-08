@@ -10,7 +10,7 @@ export default function BallScreen({ gameState }) {
   const isBatsman = socket.id === batsman
 
   const [myPick,   setMyPick]   = useState(null)
-  const [timeLeft, setTimeLeft] = useState(5)
+  const [timeLeft, setTimeLeft] = useState(3)
   const intervalRef = useRef(null)
 
   // Parent passes key={ballKey} so this component remounts on every new ball.
