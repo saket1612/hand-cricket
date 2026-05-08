@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef } from 'react'
+import { createContext, useContext, useRef } from 'react'
 import { io } from 'socket.io-client'
 
 const SocketContext = createContext(null)
@@ -19,12 +19,6 @@ function getSocket() {
 
 export function SocketProvider({ children }) {
   const socketRef = useRef(getSocket())
-
-  useEffect(() => {
-    return () => {
-      // Do NOT disconnect on unmount — socket is app-lifetime
-    }
-  }, [])
 
   return (
     <SocketContext.Provider value={socketRef.current}>
