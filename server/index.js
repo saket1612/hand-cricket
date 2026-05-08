@@ -179,10 +179,8 @@ io.on('connection', (socket) => {
     const result = gm.submitPick(roomCode, socket.id, number)
     if (!result) return
 
-    if (result.bothPicked) {
-      clearBallTimer(roomCode)
-      resolveBallAndAdvance(roomCode)
-    }
+    // Both picked — let the 5-second timer fire naturally so the countdown
+    // always runs to zero before showing the result.
   })
 
   // ── play_again ───────────────────────────────────────────────────────────
