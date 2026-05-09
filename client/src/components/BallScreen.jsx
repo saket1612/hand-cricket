@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSocket } from '../hooks/useSocket.jsx'
+import { BALL_TIMER_SECONDS, BALLS_PER_OVER } from '../config.js'
 
 const R    = 45
 const CIRC = 2 * Math.PI * R  // ≈ 282.7
@@ -10,7 +11,7 @@ export default function BallScreen({ gameState }) {
   const isBatsman = socket.id === batsman
 
   const [myPick,   setMyPick]   = useState(null)
-  const [timeLeft, setTimeLeft] = useState(3)
+  const [timeLeft, setTimeLeft] = useState(BALL_TIMER_SECONDS)
   const intervalRef = useRef(null)
 
   // Parent passes key={ballKey} so this component remounts on every new ball.
@@ -64,7 +65,7 @@ export default function BallScreen({ gameState }) {
     }
   }
 
-  const dashOffset = CIRC * (1 - timeLeft / 3)
+  const dashOffset = CIRC * (1 - timeLeft / BALL_TIMER_SECONDS)
   const timerColor = timeLeft <= 1 ? '#ef4444' : timeLeft <= 2 ? '#f97316' : '#3b82f6'
 
   // ── Full-screen OUT takeover ─────────────────────────────────────────────
@@ -84,7 +85,7 @@ export default function BallScreen({ gameState }) {
 
       {/* ── Ball dots ─────────────────────────────────────────────────────── */}
       <div style={styles.dots}>
-        {Array.from({ length: 6 }, (_, i) => {
+        {Array.from({ length: BALLS_PER_OVER }, (_, i) => {
           const played  = i < ball - 1
           const current = i === ball - 1
           return (

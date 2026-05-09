@@ -1,5 +1,7 @@
 'use strict'
 
+const { BALLS_PER_OVER } = require('./config')
+
 // ─── In-memory store ──────────────────────────────────────────────────────────
 /** @type {Map<string, object>} */
 const rooms = new Map()
@@ -143,7 +145,7 @@ function resolveBall(roomCode) {
   const batsmanPlayer = room.players.find(p => p.id === room.batsman)
   batsmanPlayer.score += runs
 
-  const wasLastBall = room.ball === 6
+  const wasLastBall = room.ball === BALLS_PER_OVER
 
   // Check if 2nd-innings target is beaten
   let targetBeaten = false

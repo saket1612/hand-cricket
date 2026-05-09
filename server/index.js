@@ -5,6 +5,7 @@ const express = require('express')
 const { createServer } = require('http')
 const { Server } = require('socket.io')
 const gm = require('./gameManager')
+const { BALL_TIMER_MS } = require('./config')
 
 const app = express()
 const httpServer = createServer(app)
@@ -55,12 +56,12 @@ function emitBallStart(roomCode) {
     ...(target !== undefined && { target }),
   })
 
-  // Start 3-second server timer
+  // Start timer — duration from config
   clearBallTimer(roomCode)
   const timerId = setTimeout(() => {
     ballTimers.delete(roomCode)
     resolveBallAndAdvance(roomCode)
-  }, 3000)
+  }, BALL_TIMER_MS)
   ballTimers.set(roomCode, timerId)
 }
 
