@@ -8,8 +8,10 @@ const CIRC = 2 * Math.PI * R  // ≈ 282.7
 
 export default function BallScreen({ gameState }) {
   const socket = useSocket()
-  const { ball, score, target, lastResult, batsman, batsmanName, bowlerName } = gameState
-  const isBatsman = socket.id === batsman
+  const { ball, score, target, lastResult, batsman, myName, opponentName } = gameState
+  const isBatsman  = socket.id === batsman
+  const batsmanName = isBatsman ? myName : opponentName
+  const bowlerName  = isBatsman ? opponentName : myName
 
   const [myPick,   setMyPick]   = useState(null)
   const [timeLeft, setTimeLeft] = useState(BALL_TIMER_SECONDS)

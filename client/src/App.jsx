@@ -14,25 +14,20 @@ function Game() {
   // phase: 'lobby' | 'waiting' | 'toss' | 'playing' | 'innings_break' | 'game_over'
   const [phase, setPhase] = useState('lobby')
   const [gameState, setGameState] = useState({
-    roomCode:       null,
-    myName:         null,
-    opponentName:   null,
-    batsman:        null,
-    bowler:         null,
-    batsmanName:    null,
-    bowlerName:     null,
-    ball:           1,
-    ballKey:        0,     // increments on every ball_start → forces BallScreen remount
-    innings:        1,
-    score:          0,
-    target:         null,
-    firstScore:     null,
-    newBatsman:     null,
-    newBatsmanName: null,
-    lastResult:     null,
-    winner:         null,
-    winnerName:     null,
-    scores:         null,
+    roomCode:     null,
+    myName:       null,
+    opponentName: null,
+    batsman:      null,
+    bowler:       null,
+    ball:         1,
+    ballKey:      0,     // increments on every ball_start → forces BallScreen remount
+    score:        0,
+    target:       null,
+    firstScore:   null,
+    lastResult:   null,
+    winner:       null,
+    winnerName:   null,
+    scores:       null,
   })
 
   useEffect(() => {
@@ -58,11 +53,8 @@ function Game() {
           ...s,
           batsman,
           bowler,
-          batsmanName:          isBatsman ? s.myName : s.opponentName,
-          bowlerName:           isBatsman ? s.opponentName : s.myName,
           ball:                 1,
           ballKey:              s.ballKey + 1,
-          innings:              1,
           score:                0,
           target:               null,
           firstScore:           null,
@@ -101,24 +93,15 @@ function Game() {
 
     // ── innings_switch ──────────────────────────────────────────────────────
     socket.on('innings_switch', ({ firstScore, newBatsman }) => {
-      setGameState(s => {
-        const isBatsman = socket.id === newBatsman
-        const newBatsmanName = isBatsman ? s.myName : s.opponentName
-        return {
-          ...s,
-          firstScore,
-          newBatsman,
-          newBatsmanName,
-          target:      firstScore,
-          score:       0,
-          lastResult:  null,
-          innings:     2,
-          batsman:     newBatsman,
-          bowler:      s.batsman,
-          batsmanName: newBatsmanName,
-          bowlerName:  s.batsmanName,
-        }
-      })
+      setGameState(s => ({
+        ...s,
+        firstScore,
+        target:     firstScore,
+        score:      0,
+        lastResult: null,
+        batsman:    newBatsman,
+        bowler:     s.batsman,
+      }))
       setPhase('innings_break')
     })
 
@@ -190,7 +173,7 @@ function Game() {
           <div className="innings-break-big">{gameState.firstScore}</div>
           <p className="detail">1st innings score</p>
           <p className="innings-break-highlight">
-            {gameState.newBatsmanName} needs{' '}
+            {gameState.batsman === socket.id ? gameState.myName : gameState.opponentName} needs{' '}
             <strong>{(gameState.firstScore ?? 0) + 1}</strong> to win
           </p>
           <p className="hint">Starting 2nd innings…</p>

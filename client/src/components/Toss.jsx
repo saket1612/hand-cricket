@@ -3,8 +3,10 @@ import '../css/Toss.css'
 
 export default function Toss({ gameState }) {
   const socket = useSocket()
-  const { batsman, batsmanName, bowlerName } = gameState
-  const isBatsman = socket.id === batsman
+  const { batsman, myName, opponentName } = gameState
+  const isBatsman  = socket.id === batsman
+  const batsmanName = isBatsman ? myName : opponentName
+  const bowlerName  = isBatsman ? opponentName : myName
 
   return (
     <div className="screen">
