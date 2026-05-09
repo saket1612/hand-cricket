@@ -92,12 +92,10 @@ function resolveBallAndAdvance(roomCode) {
     if (room.innings === 1) {
       // End of first innings → swap and show innings break
       const swapped = gm.swapInnings(roomCode)
-      const newBatsman = swapped.players.find(p => p.id === swapped.batsman)
 
       io.to(roomCode).emit('innings_switch', {
-        firstScore:      result.score,
-        newBatsman:      swapped.batsman,
-        newBatsmanName:  newBatsman.name,
+        firstScore:  result.score,
+        newBatsman:  swapped.batsman,
       })
 
       // Give players 3 seconds to read the innings-break screen, then start innings 2

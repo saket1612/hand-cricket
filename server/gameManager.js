@@ -28,7 +28,6 @@ function generateCode() {
 function createRoom(socketId, playerName) {
   const code = generateCode()
   const room = {
-    code,
     players: [
       { id: socketId, name: playerName, score: 0 },
     ],
@@ -39,7 +38,6 @@ function createRoom(socketId, playerName) {
     firstInningsScore: null,
     picks: {},
     status: 'waiting',
-    winner: null,
   }
   rooms.set(code, room)
   return { code, room }
@@ -61,7 +59,7 @@ function joinRoom(code, socketId, playerName) {
 
 /**
  * Randomly assign batsman / bowler and move room to 'playing'.
- * @returns {{ batsman: string, bowler: string, batsmanName: string, bowlerName: string }}
+ * @returns {{ batsman: string, bowler: string }}
  */
 function doToss(roomCode) {
   const room = rooms.get(roomCode)
@@ -77,8 +75,6 @@ function doToss(roomCode) {
   return {
     batsman: first.id,
     bowler: second.id,
-    batsmanName: first.name,
-    bowlerName: second.name,
   }
 }
 
@@ -227,7 +223,6 @@ function checkGameOver(roomCode) {
   }
   // else: tie — winnerId stays null
 
-  room.winner = winnerId
   room.status = 'finished'
 
   return {
@@ -256,7 +251,6 @@ function resetRoom(roomCode) {
   room.firstInningsScore = null
   room.picks            = {}
   room.status           = 'toss'
-  room.winner           = null
 
   return room
 }
