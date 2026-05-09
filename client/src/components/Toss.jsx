@@ -1,5 +1,5 @@
 import { useSocket } from '../hooks/useSocket.jsx'
-import './Toss.css'
+import '../css/Toss.css'
 
 export default function Toss({ gameState }) {
   const socket = useSocket()

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSocket } from '../hooks/useSocket.jsx'
 import { BALL_TIMER_SECONDS, BALLS_PER_OVER } from '../config.js'
-import './BallScreen.css'
+import '../css/BallScreen.css'
 
 const R    = 45
 const CIRC = 2 * Math.PI * R  // ≈ 282.7

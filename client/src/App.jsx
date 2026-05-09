@@ -5,7 +5,7 @@ import Waiting from './components/Waiting'
 import Toss from './components/Toss'
 import BallScreen from './components/BallScreen'
 import GameOver from './components/GameOver'
-import './components/InningsBreak.css'
+import './css/InningsBreak.css'
 
 // ─── Inner app — has access to socket context ─────────────────────────────────
 function Game() {

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSocket } from '../hooks/useSocket.jsx'
-import './Lobby.css'
+import '../css/Lobby.css'
 
 export default function Lobby({ onRoomCreated, onRoomJoined }) {
   const socket = useSocket()

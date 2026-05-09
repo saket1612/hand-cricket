@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './GameOver.css'
+import '../css/GameOver.css'
 
 export default function GameOver({ gameState, onPlayAgain }) {
   const { winner, winnerName, scores, myName, opponentName, opponentWantsRematch } = gameState

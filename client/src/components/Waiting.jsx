@@ -1,4 +1,4 @@
-import './Waiting.css'
+import '../css/Waiting.css'
 
 export default function Waiting({ roomCode, opponentName }) {
   const joined = Boolean(opponentName)
