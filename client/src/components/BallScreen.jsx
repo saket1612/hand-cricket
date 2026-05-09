@@ -64,7 +64,7 @@ export default function BallScreen({ gameState }) {
     }
   }
 
-  const dashOffset = CIRC * (1 - timeLeft / 5)
+  const dashOffset = CIRC * (1 - timeLeft / 3)
   const timerColor = timeLeft <= 1 ? '#ef4444' : timeLeft <= 2 ? '#f97316' : '#3b82f6'
 
   // ── Full-screen OUT takeover ─────────────────────────────────────────────
