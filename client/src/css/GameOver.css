@@ -1,7 +1,10 @@
 /* ─── GameOver ────────────────────────────────────────────────────────────── */
 .gameover-card {
-  background: #1e293b;
-  border-radius: 1rem;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 1.25rem;
   padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1rem, 5vw, 2rem);
   width: 100%;
   max-width: 380px;
@@ -9,7 +12,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
   text-align: center;
 }
 
@@ -30,16 +33,16 @@
   flex-direction: column;
   align-items: center;
   padding: 0.75rem clamp(0.75rem, 3vw, 1.25rem);
-  border-radius: 0.75rem;
-  border: 2px solid #334155;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(255,255,255,0.12);
   min-width: clamp(80px, 25vw, 110px);
-  background: #0f172a;
+  background: rgba(255,255,255,0.06);
   transition: border-color 0.2s, background 0.2s;
 }
 
 .score-chip--winner {
-  border-color: #22c55e;
-  background: #14532d;
+  border-color: rgba(74,222,128,0.6);
+  background: rgba(74,222,128,0.1);
 }
 
 .chip-name  { font-size: 0.78rem; color: #94a3b8; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px; }
@@ -49,17 +52,17 @@
   padding: 0.75rem 2rem;
   font-size: 1rem;
   font-weight: 600;
-  background: #3b82f6;
-  color: #fff;
-  border: none;
-  border-radius: 0.5rem;
+  background: rgba(74,222,128,0.18);
+  color: #4ade80;
+  border: 1px solid rgba(74,222,128,0.5);
+  border-radius: 0.6rem;
   cursor: pointer;
   min-height: 48px;
   width: 100%;
   margin-top: 0.25rem;
   transition: background 0.15s, transform 0.1s;
 }
-.btn-play-again:hover  { background: #2563eb; }
+.btn-play-again:hover  { background: rgba(74,222,128,0.28); }
 .btn-play-again:active { transform: scale(0.97); }
 
 .rematch-waiting-box {

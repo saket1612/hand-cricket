@@ -80,99 +80,93 @@ export default function BallScreen({ gameState }) {
 
   return (
     <div className="ballscreen">
-      <h2 className="ballscreen-heading">🏏 Hand Cricket</h2>
 
-      {/* ── Ball dots ─────────────────────────────────────────────────────── */}
-      <div className="ball-dots">
-        {Array.from({ length: BALLS_PER_OVER }, (_, i) => {
-          const played  = i < ball - 1
-          const current = i === ball - 1
-          return (
-            <span
-              key={i}
-              className={`ball-dot ${
-                played  ? 'ball-dot--played'
-                : current ? 'ball-dot--current'
-                : 'ball-dot--future'
-              }`}
-            >
-              {played ? '●' : current ? '◉' : '○'}
-            </span>
-          )
-        })}
+      {/* ── Top bar ───────────────────────────────────────────────────────── */}
+      <div className="bs-topbar">
+        <h2 className="bs-title">🏏 Hand Cricket</h2>
       </div>
 
-      {/* ── Score / Target ────────────────────────────────────────────────── */}
-      <div className="score-row">
-        <div className="score-box">
-          <span className="score-label">Score</span>
-          <span className="score-value">{score}</span>
+      {/* ── Score bar: team cards + ball dots ─────────────────────────────── */}
+      <div className="bs-scorebar">
+        <div className="bs-team bs-team--bat">
+          <span className="bs-team-icon">🏏</span>
+          <span className="bs-team-name">{batsmanName}</span>
+          <span className="bs-team-score">{score}</span>
+          <span className="bs-team-sub">runs</span>
         </div>
-        {target != null && (
-          <div className="score-box">
-            <span className="score-label">Target</span>
-            <span className="score-value score-value--target">{target + 1}</span>
+
+        <div className="bs-scorebar-mid">
+          <div className="ball-dots">
+            {Array.from({ length: BALLS_PER_OVER }, (_, i) => {
+              const played  = i < ball - 1
+              const current = i === ball - 1
+              return (
+                <span
+                  key={i}
+                  className={`ball-dot ${
+                    played  ? 'ball-dot--played'
+                    : current ? 'ball-dot--current'
+                    : 'ball-dot--future'
+                  }`}
+                >
+                  {played ? '●' : current ? '◉' : '○'}
+                </span>
+              )
+            })}
           </div>
-        )}
+          <span className="bs-vs-badge">VS</span>
+        </div>
+
+        <div className="bs-team bs-team--bowl">
+          <span className="bs-team-icon">🎯</span>
+          <span className="bs-team-name">{bowlerName}</span>
+          <span className={`bs-team-score${target != null ? ' bs-team-score--target' : ''}`}>
+            {target != null ? target + 1 : '—'}
+          </span>
+          <span className="bs-team-sub">{target != null ? 'target' : 'bowling'}</span>
+        </div>
       </div>
 
-      {/* ── Role label ────────────────────────────────────────────────────── */}
-      <p className="role-label">
-        {isBatsman ? '🏏 Batting' : '🎯 Bowling'}
-        <span className="role-separator"> · </span>
-        <span className="role-names">{batsmanName} vs {bowlerName}</span>
+      {/* ── Role pill ─────────────────────────────────────────────────────── */}
+      <p className="bs-role-pill">
+        {isBatsman ? '🏏 You are batting' : '🎯 You are bowling'}
       </p>
-      <p className="game-tip">⚡ Same number = OUT!</p>
 
-      {/* ── SVG countdown ring ────────────────────────────────────────────── */}
-      {!lastResult && (
-        <svg
-          width="110"
-          height="110"
-          viewBox="0 0 100 100"
-          style={{ display: 'block', margin: '0 auto' }}
-        >
-          <circle cx="50" cy="50" r={R} fill="none" stroke="#1e293b" strokeWidth="8" />
-          <circle
-            cx="50" cy="50" r={R}
-            fill="none"
-            stroke={timerColor}
-            strokeWidth="8"
-            strokeDasharray={CIRC}
-            strokeDashoffset={dashOffset}
-            strokeLinecap="round"
-            transform="rotate(-90 50 50)"
-            style={{ transition: 'stroke-dashoffset 0.9s linear, stroke 0.3s' }}
-          />
-          <text
-            x="50" y="57"
-            textAnchor="middle"
-            fontSize="30"
-            fontWeight="bold"
-            fill="#f1f5f9"
-          >
-            {timeLeft}
-          </text>
-        </svg>
-      )}
+      {/* ── Pitch stage ───────────────────────────────────────────────────── */}
+      <div className="bs-pitch">
 
-      {/* ── Bottom section: pick buttons | reveal (waiting / result) ─────── */}
-      {myPick === null && !lastResult ? (
-        <div className="btn-grid">
-          {[1, 2, 3, 4, 5, 6].map(n => (
-            <button key={n} className="num-btn" onClick={() => handlePick(n)}>
-              {n}
-            </button>
-          ))}
-        </div>
-      ) : (
-        <>
+        {/* State 1: no pick yet — tip + countdown ring */}
+        {myPick === null && !lastResult && (
+          <>
+            <p className="game-tip">⚡ Same number = OUT!</p>
+            <svg width="110" height="110" viewBox="0 0 100 100" style={{ display: 'block' }}>
+              <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="8" />
+              <circle
+                cx="50" cy="50" r={R}
+                fill="none"
+                stroke={timerColor}
+                strokeWidth="8"
+                strokeDasharray={CIRC}
+                strokeDashoffset={dashOffset}
+                strokeLinecap="round"
+                transform="rotate(-90 50 50)"
+                style={{ transition: 'stroke-dashoffset 0.9s linear, stroke 0.3s' }}
+              />
+              <text x="50" y="57" textAnchor="middle" fontSize="30" fontWeight="bold" fill="#f1f5f9">
+                {timeLeft}
+              </text>
+            </svg>
+          </>
+        )}
+
+        {/* States 2 & 3: pick made — animated reveal cards */}
+        {(myPick !== null || lastResult) && (
           <div
             key={lastResult ? 'result' : 'waiting'}
             className={`reveal-area ${
-              !lastResult ? '' :
+              !lastResult        ? '' :
               lastResult.runs === 0 ? 'reveal--zero' :
-              isBatsman ? 'reveal--runs-you' : 'reveal--runs-opp'
+              isBatsman          ? 'reveal--runs-you' : 'reveal--runs-opp'
             }`}
           >
             <div className={`pick-card pick-card--you${!lastResult ? ' pick-card--locked' : ''}`}>
@@ -196,16 +190,30 @@ export default function BallScreen({ gameState }) {
               </span>
             </div>
           </div>
+        )}
 
-          {!lastResult && (
-            <p className="reveal-waiting-text">Waiting for opponent…</p>
-          )}
-          {lastResult && (
-            <div className="result-banner" style={{ color: resultDisplay.color }}>
-              {resultDisplay.headline}
-            </div>
-          )}
-        </>
+        {/* State 2: waiting hint */}
+        {myPick !== null && !lastResult && (
+          <p className="reveal-waiting-text">Waiting for opponent…</p>
+        )}
+
+        {/* State 3: result banner */}
+        {lastResult && (
+          <div className="result-banner" style={{ color: resultDisplay.color }}>
+            {resultDisplay.headline}
+          </div>
+        )}
+      </div>
+
+      {/* ── Number grid (State 1 only) ────────────────────────────────────── */}
+      {myPick === null && !lastResult && (
+        <div className="btn-grid">
+          {[1, 2, 3, 4, 5, 6].map(n => (
+            <button key={n} className="num-btn" onClick={() => handlePick(n)}>
+              {n}
+            </button>
+          ))}
+        </div>
       )}
     </div>
   )

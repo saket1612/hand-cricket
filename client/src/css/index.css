@@ -4,20 +4,20 @@
 }
 
 html {
-  /* Prevent font scaling in landscape on iOS */
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  background: #0f172a;
+  /* Night cricket stadium: deep navy sky → forest green turf */
+  background: linear-gradient(160deg, #071628 0%, #071a0e 100%);
+  background-attachment: fixed;
+  min-height: 100dvh;
   color: #f1f5f9;
   font-family: system-ui, -apple-system, sans-serif;
-  /* Remove tap flash on mobile */
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Prevent double-tap zoom on interactive elements */
 button, input {
   touch-action: manipulation;
   font-family: inherit;
@@ -25,26 +25,31 @@ button, input {
 
 /* ─── Shared layout ───────────────────────────────────────────────────────── */
 .screen {
-  /* 100dvh accounts for mobile browser address bar (fixes Chrome/Safari) */
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.25rem 1rem;
 }
 
 .screen-title {
-  /* Scales from 1.8rem on small phones to 2.5rem on desktop */
-  font-size: clamp(1.8rem, 7vw, 2.5rem);
-  margin-bottom: 1.5rem;
-  letter-spacing: 0.05em;
+  font-size: clamp(1.8rem, 7vw, 2.4rem);
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.04em;
+  background: linear-gradient(120deg, #4ade80, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .card {
-  background: #1e293b;
-  border-radius: 1rem;
-  /* Responsive padding: smaller on mobile */
+  /* glassmorphism surface */
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 1.25rem;
   padding: clamp(1.25rem, 5vw, 2.5rem) clamp(1rem, 4vw, 2rem);
   width: 100%;
   max-width: 400px;
@@ -52,10 +57,10 @@ button, input {
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
   text-align: center;
 }
 
 .sub    { color: #94a3b8; font-size: 0.9rem; margin: 0; }
-.hint   { color: #475569; font-size: 0.85rem; margin: 0; }
-.detail { color: #64748b; font-size: 0.85rem; margin: 0; }
+.hint   { color: #64748b; font-size: 0.85rem; margin: 0; }
+.detail { color: #475569; font-size: 0.85rem; margin: 0; }
