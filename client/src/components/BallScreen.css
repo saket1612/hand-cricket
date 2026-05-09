@@ -1,0 +1,140 @@
+/* ─── BallScreen ──────────────────────────────────────────────────────────── */
+.ballscreen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  background: #0f172a;
+  color: #f1f5f9;
+  font-family: system-ui, sans-serif;
+  padding: 1.5rem;
+}
+
+.ballscreen-heading {
+  font-size: 1.6rem;
+  margin: 0;
+  letter-spacing: 0.04em;
+}
+
+/* ── Ball dots ───────────────────────────────────────────────────────────── */
+.ball-dots {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.ball-dot {
+  transition: color 0.3s;
+}
+
+.ball-dot--played  { font-size: 1.2rem; color: #22c55e; }
+.ball-dot--current { font-size: 1.5rem; color: #f1f5f9; }
+.ball-dot--future  { font-size: 1.2rem; color: #334155; }
+
+/* ── Score row ───────────────────────────────────────────────────────────── */
+.score-row {
+  display: flex;
+  gap: 2rem;
+}
+
+.score-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #1e293b;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1.4rem;
+}
+
+.score-label {
+  font-size: 0.7rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.score-value         { font-size: 2.2rem; font-weight: 700; color: #f1f5f9; line-height: 1.1; }
+.score-value--target { color: #f59e0b; }
+
+/* ── Role label ──────────────────────────────────────────────────────────── */
+.role-label     { font-size: 0.88rem; color: #94a3b8; margin: 0; }
+.role-separator { color: #334155; }
+.role-names     { color: #475569; font-size: 0.8rem; }
+
+/* ── Number buttons ──────────────────────────────────────────────────────── */
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 280px;
+}
+
+.num-btn {
+  padding: 1rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: #1e293b;
+  color: #f1f5f9;
+  border: 2px solid #334155;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.num-btn:hover { background: #273548; border-color: #3b82f6; }
+
+/* ── Waiting box ─────────────────────────────────────────────────────────── */
+.waiting-pick-box {
+  text-align: center;
+  background: #1e293b;
+  border-radius: 0.75rem;
+  padding: 1.5rem 2.5rem;
+}
+
+.picked-text  { margin: 0 0 0.5rem; font-size: 1rem; }
+.waiting-text { margin: 0; color: #64748b; font-size: 0.85rem; }
+.pick-highlight { color: #60a5fa; }
+
+/* ── Result box ──────────────────────────────────────────────────────────── */
+.result-box {
+  text-align: center;
+  background: #1e293b;
+  border-radius: 0.75rem;
+  padding: 1.5rem 2.5rem;
+  border: 2px solid;
+  min-width: 250px;
+}
+
+.result-headline { font-size: 1.8rem; font-weight: 700; margin: 0 0 0.5rem; }
+.result-sub      { color: #94a3b8; font-size: 0.9rem; margin: 0; font-family: monospace; }
+
+/* ── OUT screen ──────────────────────────────────────────────────────────── */
+.out-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #1a0000;
+  gap: 1rem;
+  font-family: system-ui, sans-serif;
+}
+
+.out-word {
+  font-size: clamp(5rem, 20vw, 10rem);
+  font-weight: 900;
+  color: #ef4444;
+  letter-spacing: 0.05em;
+  animation: outPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+  text-shadow: 0 0 60px rgba(239,68,68,0.6);
+}
+
+.out-sub  { font-size: 1.2rem; color: #fca5a5; margin: 0; }
+.out-hint { font-size: 0.85rem; color: #7f1d1d; margin: 0; }
+
+@keyframes outPop {
+  from { transform: scale(0.4); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}

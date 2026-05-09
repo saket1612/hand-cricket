@@ -1,0 +1,72 @@
+/* ─── GameOver ────────────────────────────────────────────────────────────── */
+.gameover-card {
+  background: #1e293b;
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  text-align: center;
+}
+
+.gameover-headline  { font-size: 2.4rem; font-weight: 800; line-height: 1.1; }
+.gameover-winner    { color: #94a3b8; font-size: 0.9rem; margin: 0; }
+
+.score-row-go {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.score-vs { color: #475569; font-size: 0.85rem; }
+
+.score-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 2px solid #334155;
+  min-width: 100px;
+  background: #0f172a;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.score-chip--winner {
+  border-color: #22c55e;
+  background: #14532d;
+}
+
+.chip-name  { font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.25rem; }
+.chip-score { font-size: 2rem; font-weight: 700; color: #f1f5f9; }
+
+.btn-play-again {
+  padding: 0.75rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.15s;
+}
+
+.btn-play-again:hover { background: #2563eb; }
+
+.rematch-waiting-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.rematch-waiting-text { color: #64748b; font-size: 0.9rem; margin: 0; }
+.rematch-ready-text   { color: #22c55e; font-size: 0.85rem; margin: 0; }

@@ -5,6 +5,7 @@ import Waiting from './components/Waiting'
 import Toss from './components/Toss'
 import BallScreen from './components/BallScreen'
 import GameOver from './components/GameOver'
+import './components/InningsBreak.css'
 
 // ─── Inner app — has access to socket context ─────────────────────────────────
 function Game() {
@@ -176,17 +177,17 @@ function Game() {
 
   if (phase === 'innings_break') {
     return (
-      <div style={sharedStyles.container}>
-        <h1 style={sharedStyles.title}>🏏 Hand Cricket</h1>
-        <div style={sharedStyles.card}>
-          <p style={sharedStyles.sub}>End of 1st Innings</p>
-          <div style={sharedStyles.bigNumber}>{gameState.firstScore}</div>
-          <p style={sharedStyles.detail}>1st innings score</p>
-          <p style={sharedStyles.highlight}>
+      <div className="screen">
+        <h1 className="screen-title">🏏 Hand Cricket</h1>
+        <div className="card">
+          <p className="sub">End of 1st Innings</p>
+          <div className="innings-break-big">{gameState.firstScore}</div>
+          <p className="detail">1st innings score</p>
+          <p className="innings-break-highlight">
             {gameState.newBatsmanName} needs{' '}
             <strong>{(gameState.firstScore ?? 0) + 1}</strong> to win
           </p>
-          <p style={sharedStyles.hint}>Starting 2nd innings…</p>
+          <p className="hint">Starting 2nd innings…</p>
         </div>
       </div>
     )
@@ -197,39 +198,6 @@ function Game() {
   }
 
   return null
-}
-
-const sharedStyles = {
-  container: {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: '#0f172a',
-    color: '#f1f5f9',
-    fontFamily: 'system-ui, sans-serif',
-    padding: '1rem',
-  },
-  title:     { fontSize: '2.5rem', marginBottom: '2rem', letterSpacing: '0.05em' },
-  card: {
-    background: '#1e293b',
-    borderRadius: '1rem',
-    padding: '2.5rem 2rem',
-    width: '100%',
-    maxWidth: '400px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '0.75rem',
-    boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-    textAlign: 'center',
-  },
-  sub:       { color: '#94a3b8', fontSize: '0.9rem', margin: 0 },
-  detail:    { color: '#64748b', fontSize: '0.85rem', margin: 0 },
-  bigNumber: { fontSize: '4rem', fontWeight: 700, color: '#f1f5f9', lineHeight: 1 },
-  highlight: { color: '#60a5fa', fontSize: '1rem', margin: 0 },
-  hint:      { color: '#475569', fontSize: '0.82rem', margin: 0 },
 }
 
 // ─── Root — provides socket context ──────────────────────────────────────────
