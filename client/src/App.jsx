@@ -51,25 +51,28 @@ function Game() {
 
     // ── game_start ──────────────────────────────────────────────────────────
     // Fires for both first game and rematch — always reset game state
-    socket.on('game_start', ({ batsman, bowler, batsmanName, bowlerName }) => {
-      setGameState(s => ({
-        ...s,
-        batsman,
-        bowler,
-        batsmanName,
-        bowlerName,
-        ball:                 1,
-        ballKey:              s.ballKey + 1,
-        innings:              1,
-        score:                0,
-        target:               null,
-        firstScore:           null,
-        lastResult:           null,
-        winner:               null,
-        winnerName:           null,
-        scores:               null,
-        opponentWantsRematch: false,
-      }))
+    socket.on('game_start', ({ batsman, bowler }) => {
+      setGameState(s => {
+        const isBatsman = socket.id === batsman
+        return {
+          ...s,
+          batsman,
+          bowler,
+          batsmanName:          isBatsman ? s.myName : s.opponentName,
+          bowlerName:           isBatsman ? s.opponentName : s.myName,
+          ball:                 1,
+          ballKey:              s.ballKey + 1,
+          innings:              1,
+          score:                0,
+          target:               null,
+          firstScore:           null,
+          lastResult:           null,
+          winner:               null,
+          winnerName:           null,
+          scores:               null,
+          opponentWantsRematch: false,
+        }
+      })
       setPhase('toss')
     })
 
@@ -97,22 +100,25 @@ function Game() {
     })
 
     // ── innings_switch ──────────────────────────────────────────────────────
-    socket.on('innings_switch', ({ firstScore, newBatsman, newBatsmanName }) => {
-      setGameState(s => ({
-        ...s,
-        firstScore,
-        newBatsman,
-        newBatsmanName,
-        target:      firstScore,
-        score:       0,
-        lastResult:  null,
-        innings:     2,
-        // Swap roles so BallScreen knows who is batting in innings 2
-        batsman:     newBatsman,
-        bowler:      s.batsman,
-        batsmanName: newBatsmanName,
-        bowlerName:  s.batsmanName,
-      }))
+    socket.on('innings_switch', ({ firstScore, newBatsman }) => {
+      setGameState(s => {
+        const isBatsman = socket.id === newBatsman
+        const newBatsmanName = isBatsman ? s.myName : s.opponentName
+        return {
+          ...s,
+          firstScore,
+          newBatsman,
+          newBatsmanName,
+          target:      firstScore,
+          score:       0,
+          lastResult:  null,
+          innings:     2,
+          batsman:     newBatsman,
+          bowler:      s.batsman,
+          batsmanName: newBatsmanName,
+          bowlerName:  s.batsmanName,
+        }
+      })
       setPhase('innings_break')
     })
 
