@@ -40,28 +40,21 @@ export default function BallScreen({ gameState }) {
 
   // ─── Result display ──────────────────────────────────────────────────────────
   let resultDisplay = null
+  let myActualPick  = null
+  let oppPick       = null
+
   if (lastResult) {
-    const myActualPick = isBatsman ? lastResult.batsmanPick : lastResult.bowlerPick
-    const oppPick      = isBatsman ? lastResult.bowlerPick  : lastResult.batsmanPick
-    const label        = p => p === 0 ? 'timeout' : String(p)
+    myActualPick = isBatsman ? lastResult.batsmanPick : lastResult.bowlerPick
+    oppPick      = isBatsman ? lastResult.bowlerPick  : lastResult.batsmanPick
 
     if (lastResult.isOut) {
-      resultDisplay = {
-        headline: '⬛ OUT!',
-        sub:      `Both picked ${lastResult.batsmanPick}`,
-        color:    '#ef4444',
-      }
+      resultDisplay = { headline: '💥 OUT!', color: '#ef4444' }
     } else if (lastResult.runs === 0) {
-      resultDisplay = {
-        headline: '🚫 No runs',
-        sub:      `You: ${label(myActualPick)}  ·  Opp: ${label(oppPick)}`,
-        color:    '#94a3b8',
-      }
+      resultDisplay = { headline: '🚫 No runs', color: '#64748b' }
     } else {
       resultDisplay = {
         headline: `+${lastResult.runs} run${lastResult.runs !== 1 ? 's' : ''}! 🏏`,
-        sub:      `You: ${label(myActualPick)}  ·  Opp: ${label(oppPick)}`,
-        color:    '#22c55e',
+        color: '#22c55e',
       }
     }
   }
@@ -73,6 +66,11 @@ export default function BallScreen({ gameState }) {
   if (lastResult?.isOut) {
     return (
       <div className="out-screen">
+        <div className="out-clash">
+          <div className="out-clash-num out-clash-num--left">{lastResult.batsmanPick}</div>
+          <div className="out-clash-eq">💥</div>
+          <div className="out-clash-num out-clash-num--right">{lastResult.batsmanPick}</div>
+        </div>
         <div className="out-word">OUT!</div>
         <p className="out-sub">Both picked <strong>{lastResult.batsmanPick}</strong></p>
         <p className="out-hint">Next up…</p>
@@ -124,6 +122,7 @@ export default function BallScreen({ gameState }) {
         <span className="role-separator"> · </span>
         <span className="role-names">{batsmanName} vs {bowlerName}</span>
       </p>
+      <p className="game-tip">⚡ Same number = OUT!</p>
 
       {/* ── SVG countdown ring ────────────────────────────────────────────── */}
       {!lastResult && (
@@ -157,15 +156,8 @@ export default function BallScreen({ gameState }) {
         </svg>
       )}
 
-      {/* ── Bottom section: buttons / waiting / result ────────────────────── */}
-      {lastResult ? (
-        <div className="result-box" style={{ borderColor: resultDisplay.color }}>
-          <p className="result-headline" style={{ color: resultDisplay.color }}>
-            {resultDisplay.headline}
-          </p>
-          <p className="result-sub">{resultDisplay.sub}</p>
-        </div>
-      ) : myPick === null ? (
+      {/* ── Bottom section: pick buttons | reveal (waiting / result) ─────── */}
+      {myPick === null && !lastResult ? (
         <div className="btn-grid">
           {[1, 2, 3, 4, 5, 6].map(n => (
             <button key={n} className="num-btn" onClick={() => handlePick(n)}>
@@ -174,12 +166,46 @@ export default function BallScreen({ gameState }) {
           ))}
         </div>
       ) : (
-        <div className="waiting-pick-box">
-          <p className="picked-text">
-            You picked <strong className="pick-highlight">{myPick}</strong>
-          </p>
-          <p className="waiting-text">Waiting for opponent…</p>
-        </div>
+        <>
+          <div
+            key={lastResult ? 'result' : 'waiting'}
+            className={`reveal-area ${
+              !lastResult ? '' :
+              lastResult.runs === 0 ? 'reveal--zero' :
+              isBatsman ? 'reveal--runs-you' : 'reveal--runs-opp'
+            }`}
+          >
+            <div className={`pick-card pick-card--you${!lastResult ? ' pick-card--locked' : ''}`}>
+              <span className="pick-card-label">You</span>
+              <span className="pick-card-num">
+                {lastResult ? (myActualPick === 0 ? '⏱' : myActualPick) : myPick}
+              </span>
+            </div>
+
+            <div className="reveal-vs">
+              {lastResult && lastResult.runs > 0
+                ? <span className="reveal-runs-badge">+{lastResult.runs}</span>
+                : <span className="reveal-vs-text">VS</span>
+              }
+            </div>
+
+            <div className={`pick-card pick-card--opp${!lastResult ? ' pick-card--mystery' : ''}`}>
+              <span className="pick-card-label">Opp</span>
+              <span className={`pick-card-num${!lastResult ? ' pick-card-num--mystery' : ''}`}>
+                {lastResult ? (oppPick === 0 ? '⏱' : oppPick) : '?'}
+              </span>
+            </div>
+          </div>
+
+          {!lastResult && (
+            <p className="reveal-waiting-text">Waiting for opponent…</p>
+          )}
+          {lastResult && (
+            <div className="result-banner" style={{ color: resultDisplay.color }}>
+              {resultDisplay.headline}
+            </div>
+          )}
+        </>
       )}
     </div>
   )

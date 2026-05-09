@@ -1,19 +1,19 @@
 /* ─── BallScreen ──────────────────────────────────────────────────────────── */
 .ballscreen {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem;
+  gap: 1rem;
   background: #0f172a;
   color: #f1f5f9;
-  font-family: system-ui, sans-serif;
-  padding: 1.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  padding: 1rem 1rem 1.5rem;
 }
 
 .ballscreen-heading {
-  font-size: 1.6rem;
+  font-size: clamp(1.2rem, 5vw, 1.6rem);
   margin: 0;
   letter-spacing: 0.04em;
 }
@@ -21,21 +21,21 @@
 /* ── Ball dots ───────────────────────────────────────────────────────────── */
 .ball-dots {
   display: flex;
-  gap: 0.6rem;
+  gap: clamp(0.35rem, 2vw, 0.6rem);
 }
 
 .ball-dot {
   transition: color 0.3s;
 }
 
-.ball-dot--played  { font-size: 1.2rem; color: #22c55e; }
-.ball-dot--current { font-size: 1.5rem; color: #f1f5f9; }
-.ball-dot--future  { font-size: 1.2rem; color: #334155; }
+.ball-dot--played  { font-size: clamp(1rem, 4vw, 1.2rem); color: #22c55e; }
+.ball-dot--current { font-size: clamp(1.2rem, 5vw, 1.5rem); color: #f1f5f9; }
+.ball-dot--future  { font-size: clamp(1rem, 4vw, 1.2rem); color: #334155; }
 
 /* ── Score row ───────────────────────────────────────────────────────────── */
 .score-row {
   display: flex;
-  gap: 2rem;
+  gap: clamp(1rem, 5vw, 2rem);
 }
 
 .score-box {
@@ -44,95 +44,259 @@
   align-items: center;
   background: #1e293b;
   border-radius: 0.75rem;
-  padding: 0.5rem 1.4rem;
+  padding: 0.5rem clamp(0.75rem, 4vw, 1.4rem);
+  min-width: clamp(70px, 20vw, 100px);
 }
 
 .score-label {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
-.score-value         { font-size: 2.2rem; font-weight: 700; color: #f1f5f9; line-height: 1.1; }
+.score-value         { font-size: clamp(1.8rem, 8vw, 2.2rem); font-weight: 700; color: #f1f5f9; line-height: 1.1; }
 .score-value--target { color: #f59e0b; }
 
 /* ── Role label ──────────────────────────────────────────────────────────── */
-.role-label     { font-size: 0.88rem; color: #94a3b8; margin: 0; }
+.role-label     { font-size: 0.85rem; color: #94a3b8; margin: 0; text-align: center; }
 .role-separator { color: #334155; }
-.role-names     { color: #475569; font-size: 0.8rem; }
+.role-names     { color: #475569; font-size: 0.78rem; }
+
+/* ── Game tip ────────────────────────────────────────────────────────────── */
+.game-tip {
+  font-size: 0.72rem;
+  color: #334155;
+  margin: -0.25rem 0 0;
+  letter-spacing: 0.02em;
+}
 
 /* ── Number buttons ──────────────────────────────────────────────────────── */
 .btn-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
+  gap: clamp(0.5rem, 2.5vw, 0.75rem);
   width: 100%;
-  max-width: 280px;
+  /* Wider on mobile so buttons are easier to tap */
+  max-width: min(320px, 92vw);
 }
 
 .num-btn {
-  padding: 1rem;
-  font-size: 1.4rem;
+  padding: clamp(0.75rem, 3vw, 1rem);
+  font-size: clamp(1.2rem, 6vw, 1.4rem);
   font-weight: 700;
   background: #1e293b;
   color: #f1f5f9;
   border: 2px solid #334155;
   border-radius: 0.75rem;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  /* Minimum 52px so thumbs can tap reliably */
+  min-height: 52px;
+  transition: background 0.12s, border-color 0.12s, transform 0.1s;
 }
 
-.num-btn:hover { background: #273548; border-color: #3b82f6; }
+.num-btn:hover  { background: #273548; border-color: #3b82f6; }
+.num-btn:active { transform: scale(0.93); background: #1a2e47; }
 
-/* ── Waiting box ─────────────────────────────────────────────────────────── */
-.waiting-pick-box {
-  text-align: center;
+/* ── Reveal area (waiting + result) ──────────────────────────────────────── */
+.reveal-area {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(0.5rem, 2vw, 0.75rem);
+  width: 100%;
+  max-width: min(320px, 92vw);
+}
+
+.pick-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
   background: #1e293b;
-  border-radius: 0.75rem;
-  padding: 1.5rem 2.5rem;
+  border: 2px solid #334155;
+  border-radius: 0.85rem;
+  padding: 0.75rem 0.5rem;
+  min-height: 90px;
 }
 
-.picked-text  { margin: 0 0 0.5rem; font-size: 1rem; }
-.waiting-text { margin: 0; color: #64748b; font-size: 0.85rem; }
-.pick-highlight { color: #60a5fa; }
+.pick-card--you {
+  animation: slideFromLeft 0.45s cubic-bezier(0.34,1.56,0.64,1) both;
+}
 
-/* ── Result box ──────────────────────────────────────────────────────────── */
-.result-box {
+.pick-card--opp {
+  animation: slideFromRight 0.45s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+/* locked = you've picked, waiting for opponent */
+.pick-card--locked {
+  border-color: #3b82f6;
+  background: rgba(59,130,246,0.08);
+}
+
+.pick-card--mystery {
+  border-color: #1e3a5f;
+  background: #0a1628;
+}
+
+.pick-card-label {
+  font-size: 0.65rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.pick-card-num {
+  font-size: clamp(2rem, 10vw, 2.8rem);
+  font-weight: 800;
+  color: #f1f5f9;
+  line-height: 1;
+}
+
+.pick-card-num--mystery {
+  color: #334155;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* ── Outcome state modifiers ─────────────────────────────────────────────── */
+.reveal--runs-you .pick-card--you {
+  border-color: #22c55e;
+  background: rgba(34,197,94,0.1);
+  animation: slideFromLeft 0.45s cubic-bezier(0.34,1.56,0.64,1) both,
+             runsGlow 0.8s ease-out 0.5s both;
+}
+.reveal--runs-you .pick-card--you .pick-card-num { color: #22c55e; }
+
+.reveal--runs-opp .pick-card--opp {
+  border-color: #22c55e;
+  background: rgba(34,197,94,0.1);
+  animation: slideFromRight 0.45s cubic-bezier(0.34,1.56,0.64,1) both,
+             runsGlow 0.8s ease-out 0.5s both;
+}
+.reveal--runs-opp .pick-card--opp .pick-card-num { color: #22c55e; }
+
+.reveal--zero .pick-card     { opacity: 0.55; }
+.reveal--zero .pick-card-num { color: #64748b; }
+
+/* ── VS divider ──────────────────────────────────────────────────────────── */
+.reveal-vs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 38px;
+  animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1) 0.3s both;
+}
+
+.reveal-vs-text {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #475569;
+  letter-spacing: 0.08em;
+}
+
+.reveal-runs-badge {
+  font-size: clamp(1.1rem, 5vw, 1.4rem);
+  font-weight: 800;
+  color: #22c55e;
+  animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.45s both;
+}
+
+/* ── Waiting hint & result banner ────────────────────────────────────────── */
+.reveal-waiting-text {
+  font-size: 0.82rem;
+  color: #475569;
+  margin: 0;
+  animation: popIn 0.3s ease 0.4s both;
+}
+
+.result-banner {
+  font-size: clamp(1.4rem, 6vw, 1.8rem);
+  font-weight: 800;
   text-align: center;
-  background: #1e293b;
-  border-radius: 0.75rem;
-  padding: 1.5rem 2.5rem;
-  border: 2px solid;
-  min-width: 250px;
+  letter-spacing: 0.02em;
+  animation: floatIn 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.5s both;
 }
-
-.result-headline { font-size: 1.8rem; font-weight: 700; margin: 0 0 0.5rem; }
-.result-sub      { color: #94a3b8; font-size: 0.9rem; margin: 0; font-family: monospace; }
 
 /* ── OUT screen ──────────────────────────────────────────────────────────── */
 .out-screen {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background: #1a0000;
-  gap: 1rem;
+  gap: 0.75rem;
   font-family: system-ui, sans-serif;
 }
 
+.out-clash {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 3vw, 1rem);
+}
+
+.out-clash-num {
+  font-size: clamp(3rem, 14vw, 5rem);
+  font-weight: 900;
+  color: #ef4444;
+  line-height: 1;
+  text-shadow: 0 0 30px rgba(239,68,68,0.5);
+}
+.out-clash-num--left  { animation: slideFromLeft  0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
+.out-clash-num--right { animation: slideFromRight 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+.out-clash-eq {
+  font-size: clamp(1.5rem, 7vw, 2.5rem);
+  animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1) 0.35s both;
+}
+
 .out-word {
-  font-size: clamp(5rem, 20vw, 10rem);
+  font-size: clamp(5rem, 22vw, 10rem);
   font-weight: 900;
   color: #ef4444;
   letter-spacing: 0.05em;
-  animation: outPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+  /* delay so the clash numbers animate first */
+  animation: outPop 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.55s both;
   text-shadow: 0 0 60px rgba(239,68,68,0.6);
 }
 
-.out-sub  { font-size: 1.2rem; color: #fca5a5; margin: 0; }
-.out-hint { font-size: 0.85rem; color: #7f1d1d; margin: 0; }
+.out-sub  { font-size: clamp(1rem, 4vw, 1.2rem); color: #fca5a5; margin: 0; animation: popIn 0.3s ease 0.9s both; }
+.out-hint { font-size: 0.85rem; color: #7f1d1d; margin: 0; animation: popIn 0.3s ease 1.1s both; }
+
+/* ── Keyframes ───────────────────────────────────────────────────────────── */
+@keyframes slideFromLeft {
+  from { transform: translateX(-50px) scale(0.8); opacity: 0; }
+  to   { transform: translateX(0)     scale(1);   opacity: 1; }
+}
+
+@keyframes slideFromRight {
+  from { transform: translateX(50px) scale(0.8); opacity: 0; }
+  to   { transform: translateX(0)    scale(1);   opacity: 1; }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.4); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+@keyframes floatIn {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.92); }
+  50%       { opacity: 1;   transform: scale(1.05); }
+}
+
+@keyframes runsGlow {
+  from { box-shadow: 0 0 0 2px rgba(34,197,94,0.7); }
+  to   { box-shadow: 0 0 22px 8px rgba(34,197,94,0); }
+}
 
 @keyframes outPop {
   from { transform: scale(0.4); opacity: 0; }

@@ -3,16 +3,30 @@
   box-sizing: border-box;
 }
 
+html {
+  /* Prevent font scaling in landscape on iOS */
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   background: #0f172a;
   color: #f1f5f9;
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
+  /* Remove tap flash on mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent double-tap zoom on interactive elements */
+button, input {
+  touch-action: manipulation;
+  font-family: inherit;
 }
 
 /* ─── Shared layout ───────────────────────────────────────────────────────── */
 .screen {
-  min-height: 100vh;
+  /* 100dvh accounts for mobile browser address bar (fixes Chrome/Safari) */
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,15 +35,17 @@ body {
 }
 
 .screen-title {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
+  /* Scales from 1.8rem on small phones to 2.5rem on desktop */
+  font-size: clamp(1.8rem, 7vw, 2.5rem);
+  margin-bottom: 1.5rem;
   letter-spacing: 0.05em;
 }
 
 .card {
   background: #1e293b;
   border-radius: 1rem;
-  padding: 2.5rem 2rem;
+  /* Responsive padding: smaller on mobile */
+  padding: clamp(1.25rem, 5vw, 2.5rem) clamp(1rem, 4vw, 2rem);
   width: 100%;
   max-width: 400px;
   display: flex;
@@ -40,6 +56,6 @@ body {
   text-align: center;
 }
 
-.sub   { color: #94a3b8; font-size: 0.9rem; margin: 0; }
-.hint  { color: #475569; font-size: 0.85rem; margin: 0; }
+.sub    { color: #94a3b8; font-size: 0.9rem; margin: 0; }
+.hint   { color: #475569; font-size: 0.85rem; margin: 0; }
 .detail { color: #64748b; font-size: 0.85rem; margin: 0; }

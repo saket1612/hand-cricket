@@ -2,25 +2,25 @@
 .gameover-card {
   background: #1e293b;
   border-radius: 1rem;
-  padding: 2.5rem 2rem;
+  padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1rem, 5vw, 2rem);
   width: 100%;
-  max-width: 400px;
+  max-width: 380px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
   box-shadow: 0 4px 24px rgba(0,0,0,0.4);
   text-align: center;
 }
 
-.gameover-headline  { font-size: 2.4rem; font-weight: 800; line-height: 1.1; }
+.gameover-headline  { font-size: clamp(1.8rem, 8vw, 2.4rem); font-weight: 800; line-height: 1.1; }
 .gameover-winner    { color: #94a3b8; font-size: 0.9rem; margin: 0; }
 
 .score-row-go {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin: 0.5rem 0;
+  gap: clamp(0.5rem, 3vw, 1rem);
+  margin: 0.25rem 0;
 }
 
 .score-vs { color: #475569; font-size: 0.85rem; }
@@ -29,10 +29,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem clamp(0.75rem, 3vw, 1.25rem);
   border-radius: 0.75rem;
   border: 2px solid #334155;
-  min-width: 100px;
+  min-width: clamp(80px, 25vw, 110px);
   background: #0f172a;
   transition: border-color 0.2s, background 0.2s;
 }
@@ -42,11 +42,11 @@
   background: #14532d;
 }
 
-.chip-name  { font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.25rem; }
-.chip-score { font-size: 2rem; font-weight: 700; color: #f1f5f9; }
+.chip-name  { font-size: 0.78rem; color: #94a3b8; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px; }
+.chip-score { font-size: clamp(1.6rem, 7vw, 2rem); font-weight: 700; color: #f1f5f9; }
 
 .btn-play-again {
-  padding: 0.75rem 2.5rem;
+  padding: 0.75rem 2rem;
   font-size: 1rem;
   font-weight: 600;
   background: #3b82f6;
@@ -54,11 +54,13 @@
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  margin-top: 0.5rem;
-  transition: background 0.15s;
+  min-height: 48px;
+  width: 100%;
+  margin-top: 0.25rem;
+  transition: background 0.15s, transform 0.1s;
 }
-
-.btn-play-again:hover { background: #2563eb; }
+.btn-play-again:hover  { background: #2563eb; }
+.btn-play-again:active { transform: scale(0.97); }
 
 .rematch-waiting-box {
   display: flex;
